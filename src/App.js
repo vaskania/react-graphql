@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState, useEffect} from 'react'
+import {useQuery} from "@apollo/client";
+import {GET_ALL_CONTINENTS} from "./query/data";
 
-function App() {
+const App = () => {
+  const {data, loading, error} = useQuery(GET_ALL_CONTINENTS)
+  const [continents, setContinents] = useState([])
+
+  useEffect(() => {
+    if (!loading) {
+      const arr = []
+      data.continents.map(continent => arr.push(continent.name))
+      setContinents(prevState => [...prevState,arr])
+    }
+  }, [data]);
+
+  console.log(continents)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <div>
+        <button>get data</button>
+        <div></div>
+      </div>
+
+  )
 }
 
 export default App;
