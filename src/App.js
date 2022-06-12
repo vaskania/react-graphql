@@ -1,24 +1,23 @@
 import {useState, useEffect} from 'react'
-import {useQuery} from "@apollo/client";
+import Continent from "./components/Continent";
+import useFetch from "./hooks/useFetch";
 import {GET_ALL_CONTINENTS} from "./query/data";
 
 const App = () => {
-  const {data, loading, error} = useQuery(GET_ALL_CONTINENTS)
   const [continents, setContinents] = useState([])
+  const data = useFetch(GET_ALL_CONTINENTS)
 
   useEffect(() => {
-    if (!loading) {
-      const arr = []
-      data.continents.map(continent => arr.push(continent.name))
-      setContinents(prevState => [...prevState,arr])
-    }
-  }, [data]);
+    setContinents(data.data.continents)
+  }, [data])
 
-  console.log(continents)
+
   return (
       <div>
-        <button>get data</button>
-        <div></div>
+        {continents && continents.map(continent => (
+                <Continent key={continent.code} code={continent.code} name={continent.name}/>
+            )
+        )}
       </div>
 
   )
