@@ -5,6 +5,7 @@ const Continent = ({name, code}) => {
   const [show, setShow] = useState(false)
   const [countries, setCountries] = useState([])
 
+
   const fetchData = async (code) => {
     const res = await fetch("https://countries.trevorblades.com", {
       method: "POST",
