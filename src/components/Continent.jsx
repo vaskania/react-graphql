@@ -1,7 +1,7 @@
 import Country from './Country'
-import {useState} from "react";
+import { useState } from "react";
 
-const Continent = ({name, code}) => {
+const Continent = ({ name, code }) => {
   const [show, setShow] = useState(false)
   const [countries, setCountries] = useState([])
 
@@ -9,7 +9,7 @@ const Continent = ({name, code}) => {
   const fetchData = async (code) => {
     const res = await fetch("https://countries.trevorblades.com", {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         query: `
         query {
@@ -27,18 +27,18 @@ const Continent = ({name, code}) => {
     setCountries(data.data.continent.countries)
   }
 
-  const toggleContinents = () => {
+  const toggleCountries = () => {
     fetchData(code)
     setShow(prevState => !prevState)
   }
 
   return (
-      <div>
-        <div className='continent-container' onClick={toggleContinents}>{name}</div>
-        {show && countries.map(country => (
-            <Country key={country.code} code={country.code} country={country.name}/>
-        ))}
-      </div>
+     <div>
+       <div className='continent-container' onClick={toggleCountries}>{name}</div>
+       {show && countries.map(country => (
+          <Country key={country.code} code={country.code} country={country.name} toggleCountries={toggleCountries}/>
+       ))}
+     </div>
   )
 }
 

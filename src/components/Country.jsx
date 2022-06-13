@@ -1,7 +1,7 @@
 import {useState} from "react";
 import Language from "./Language";
 
-const Country = ({country, code}) => {
+const Country = ({country, code, toggleCountries}) => {
   const [show, setShow] = useState(false)
   const [languages, setLanguages] = useState([])
 
@@ -36,7 +36,7 @@ const Country = ({country, code}) => {
       <div>
         <div className='country-container' onClick={toggleLanguage}>{country}</div>
         {show && languages.map(language => (
-            <Language key={language.name} language={language.name}/>
+            <Language key={language.name} language={language.name} toggleCountries={toggleCountries}/>
         ))}
       </div>
   )
